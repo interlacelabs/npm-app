@@ -13,6 +13,7 @@ RUN npm install && npm install vm2@3.9.17
 # Copy the rest of your application's code into the working directory
 COPY ./app.js ./
 COPY ./static/. ./static/
+COPY ./templates/. ./templates/
 
 # Make port 3000 available outside of this container
 EXPOSE 3000
