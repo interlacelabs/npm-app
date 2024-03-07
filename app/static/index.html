@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Node.js Code Execution Demo</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Node.js Code Execution Sandbox</h1>
+        <div class="form-group">
+            <label for="codeInput">Enter your Node.js code here:</label>
+            <textarea class="form-control" id="codeInput" rows="10" placeholder="console.log('Hello World');"></textarea>
+        </div>
+        <button id="executeBtn" class="btn btn-primary">Execute</button>
+        <div class="form-group">
+            <label for="output">Output:</label>
+            <textarea class="form-control" id="output" rows="5" readonly></textarea>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#executeBtn').click(function() {
+                const code = $('#codeInput').val();
+                $.ajax({
+                    type: 'POST',
+                    url: '/run',
+                    contentType: 'text/plain',
+                    data: code,
+                    success: function(response) {
+                        // Join the array of outputs into a single string, separated by newlines
+                        $('#output').val(response.output.join('\n'));
+                    },
+                    error: function(xhr) {
+                        $('#output').val(`Error: ${xhr.responseText}`);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
